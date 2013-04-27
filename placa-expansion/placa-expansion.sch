@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date vie 26 abr 2013 22:01:33 ART
+EESchema Schematic File Version 2  date vie 26 abr 2013 22:06:17 ART
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -30,6 +30,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:Conn-raspberry
+LIBS:placa-expansion-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
@@ -251,4 +252,17 @@ Wire Wire Line
 	4800 1600 4800 1700
 Text Label 6600 3300 0    60   ~ 0
 VBoost
+$Comp
+L CONN_8X2 P?
+U 1 1 517B24BF
+P 1650 4000
+F 0 "P?" H 1650 4450 60  0000 C CNN
+F 1 "CONN_8X2" V 1650 4000 50  0000 C CNN
+F 2 "~" H 1650 4000 60  0000 C CNN
+F 3 "~" H 1650 4000 60  0000 C CNN
+	1    1650 4000
+	1    0    0    -1  
+$EndComp
+Text Label 1600 4650 0    60   ~ 0
+TXB0108
 $EndSCHEMATC
