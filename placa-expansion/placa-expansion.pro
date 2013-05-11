@@ -1,11 +1,6 @@
-update=vie 03 may 2013 21:20:32 ART
+update=vie 10 may 2013 21:59:13 ART
 version=1
-last_client=eeschema
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
+last_client=kicad
 [pcbnew]
 version=1
 PadDrlX=320
@@ -24,7 +19,6 @@ TxtLar=120
 MSegLar=150
 LastNetListRead=
 [pcbnew/libraries]
-LibDir=
 LibName1=sockets
 LibName2=connect
 LibName3=discret
@@ -36,8 +30,10 @@ LibName8=led
 LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
-[general]
-version=1
+LibName12=molex_2_recto
+LibName13=TSSOP20
+LibName14=texasDCDC
+LibDir=../placa-expansion
 [eeschema]
 version=1
 LibDir=../placa-expansion
@@ -80,3 +76,10 @@ LibName30=valves
 LibName31=Conn-raspberry
 LibName32=txb0108
 LibName33=ptn78020
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
+[general]
+version=1
