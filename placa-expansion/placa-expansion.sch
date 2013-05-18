@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date vie 10 may 2013 21:50:01 ART
+EESchema Schematic File Version 2  date vie 17 may 2013 21:18:23 ART
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -32,14 +32,13 @@ LIBS:valves
 LIBS:Conn-raspberry
 LIBS:txb0108
 LIBS:ptn78020
-LIBS:placa-expansion-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Expansión para el 3pi - Raspberry Pi"
-Date "11 may 2013"
+Date "17 may 2013"
 Rev "0.8"
 Comp "Club de Robótica FIUBA"
 Comment1 "Lucas Chiesa, Gabriel Gavinowich"
@@ -58,7 +57,7 @@ F 1 "CONN_3PI" V 3150 4900 60  0000 C CNN
 F 2 "~" H 3150 4900 60  0000 C CNN
 F 3 "~" H 3150 4900 60  0000 C CNN
 	1    3150 4900
-	1    0    0    -1  
+	-1   0    0    -1  
 $EndComp
 Text Label 2750 4800 2    60   ~ 0
 TX_3pi
@@ -73,7 +72,7 @@ F 1 "PWR_HUB" V 5200 3150 40  0000 C CNN
 F 2 "~" H 5150 3150 60  0000 C CNN
 F 3 "~" H 5150 3150 60  0000 C CNN
 	1    5150 3150
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L CONN_2 P1
