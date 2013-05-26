@@ -14,6 +14,17 @@ class Py3pi:
         """
         self.transport = transport
 
+    def _two_bytes_to_int(self, byte_list):
+        """ Takes a list of two bytes and forms and int. The first value
+        is the less significant one.
+
+        :param byte_list: The input bytes.
+        :type byte_list: list
+        :return: the int formed by the two values.
+        :rtype: int
+        """
+        return byte_list[0] + (byte_list[1] << 8)
+
     def _set_motor_speed(self, motor, speed):
         """
         Sets the speed of any motor.
@@ -99,7 +110,9 @@ class Py3pi:
         :returns: A normalized number representing the potentiometer value.
         :rtype: float
         """
-        pass
+        self.transport.write([CMDS['SEND_TRIMPOT']])
+        ans = self.transport.read(2)
+        return self._two_bytes_to_int(ans)
 
     def battery(self):
         """
@@ -108,7 +121,9 @@ class Py3pi:
         :returns: A number representing the current battery voltage.
         :rtype: float
         """
-        pass
+        self.transport.write([CMDS['SEND_BATTERY_MILLIVOLTS']])
+        ans = self.transport.read(2)
+        return self._two_bytes_to_int(ans)
 
     def line_position(self):
         """ Read the position of the detected line.
@@ -120,14 +135,18 @@ class Py3pi:
             *   1.0 means the line is on the right
         :rtype: float
         """
-        pass
+        self.transport.write([CMDS['SEND_LINE_POSITION']])
+        ans = self.transport.read(2)
+        ans = self._two_bytes_to_int(ans)
+        return (ans - 2048.0) / 2048
 
     def sensor_auto_calibrate(self):
         """
         Calibrate the sensors. This turns the robot left then right,
         looking for a line.
         """
-        pass
+        self.transport.write([CMDS['AUTO_CALIBRATE']])
+        return self.transport.read()
 
     def calibrate(self):
         """

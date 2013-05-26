@@ -1,7 +1,8 @@
 import unittest
+import numpy
 from protocol import CMDS
 from test_transport import TestTransport
-from m3pi import Py3pi
+from py3pi import Py3pi
 
 
 class TestTestTransport(unittest.TestCase):
@@ -41,7 +42,7 @@ class TestTestTransport(unittest.TestCase):
         self.assertEqual(test_cmd, cmd[0])
 
 
-class Testm3pi(unittest.TestCase):
+class TestPy3pi(unittest.TestCase):
     """
     Tests the communication protocol with the 3pi robot.
     """
@@ -68,6 +69,11 @@ class Testm3pi(unittest.TestCase):
         wrote = self.tr._wrote()[0]
         self.assertEqual(tuple(wrote), gt)
         self.tr._clean()
+
+    def test_two_bytes_to_int(self):
+        """ Tests if the byte operation is done correctly. """
+        ans = self.robot._two_bytes_to_int([3, 2])
+        self.assertEqual(ans, 256*2+3)
 
     def test_set_motor_speed(self):
         """
@@ -169,7 +175,7 @@ class Testm3pi(unittest.TestCase):
         self.assertEqual(self.tr._wrote()[0], [CMDS['STOP_PID']])
 
     def test_reset(self):
-        """ In dos-tau tere is no connection between the rPi and the 3pi reset
+        """ In dos-tau there is no connection between the rPi and the 3pi reset
         pin. This method should raise an exception."""
         self.assertRaises(NotImplementedError, self.robot.reset)
 
@@ -184,7 +190,7 @@ class Testm3pi(unittest.TestCase):
         self.assertEqual(sent, [CMDS['LINE_SENSORS_RESET_CALIBRATION']])
 
     def test_locate(self):
-        """ Moves the LCD cursor to a given prosition. """
+        """ Moves the LCD cursor to a given position. """
         self.robot.locate(1, 1)
         sent = self.tr._wrote()
         self.assertEqual(sent[0], [CMDS['DO_LCD_GOTO_XY'], 1, 1])
@@ -193,6 +199,18 @@ class Testm3pi(unittest.TestCase):
         """ Clears the LCD screen. """
         self.robot.cls()
         self.assertEqual(self.tr._wrote()[0], [CMDS['DO_CLEAR']])
+
+    def test_battery(self):
+        """ The 3pi replays with 2 bytes, the first one being the lowest. """
+        self.tr._ans([1, 1])
+        ans = self.robot.battery()
+        self.assertEqual(ans, 257)
+
+    def test_line_position(self):
+        """ The line position is also sent as a two byte value. """
+        self.tr._ans([12, 12])
+        pos = self.robot.line_position()
+        self.assertEqual(numpy.around(pos, decimals=1), 0.5)
 
 
 if __name__ == '__main__':

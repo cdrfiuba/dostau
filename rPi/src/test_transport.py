@@ -14,11 +14,12 @@ class TestTransport(Transports):
 
     def _wrote(self):
         return [self._to_int_list(c) for c in self.wrote]
-        
+
     def _clean(self):
         self.wrote = []
-        
-    def _set_ans(self, ans):
+        self.ans_buff = []
+
+    def _ans(self, ans):
         self.ans_buff = ans
 
     def open(self):
@@ -29,4 +30,4 @@ class TestTransport(Transports):
         self.wrote.append(cmd)
 
     def read(self, size=1):
-        return ans[:size]
+        return self.ans_buff[:size]
