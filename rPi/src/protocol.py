@@ -17,3 +17,6 @@ CMDS = {"SEND_SIGNATURE": 0x81,
         "M2_FORWARD": 0xC5,
         "M2_BACKWARD": 0xC6
         }
+
+LEFT = 2
+RIGHT = 1

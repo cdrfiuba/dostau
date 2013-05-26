@@ -9,16 +9,24 @@ class TestTransport(Transports):
     """
     def __init__(self):
         Transports.__init__(self)
-        self.wrote = None
+        self.wrote = []
+        self.ans_buff = []
 
     def _wrote(self):
-        return self.wrote
+        return [self._to_int_list(c) for c in self.wrote]
+        
+    def _clean(self):
+        self.wrote = []
+        
+    def _set_ans(self, ans):
+        self.ans_buff = ans
 
     def open(self):
         pass
 
     def write(self, value):
-        self.wrote = value
+        cmd = self._to_string(value)
+        self.wrote.append(cmd)
 
-    def read(self):
-        pass
+    def read(self, size=1):
+        return ans[:size]

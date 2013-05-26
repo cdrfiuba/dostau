@@ -1,4 +1,4 @@
-from protocol import CMDS
+from protocol import CMDS, LEFT, RIGHT
 
 
 class M3pi:
@@ -23,19 +23,20 @@ class M3pi:
         :param speed: A normalised number -1.0 - 1.0 represents the full range.
         :type speed: float
         """
-        if motor != 1 and motor != 2
+        if motor not in [1, 2]:
+            raise ValueError("Invalid motor index")
+
         mot = 'M' + str(motor) + '_'
-        if motor == 1:
-            mot = 'M1_'
-        elif motor == 2:
-            mot = 'M2_'
+        if speed >= 0:
+            mot += 'FORWARD'
+        else:
+            mot += 'BACKWARD'
 
-
-        self.transport.write([mot, 0x7f * 1])
+        self.transport.write([CMDS[mot], 0x7f * abs(speed)])
 
     def reset(self):
         """ Force a hardware reset of the 3pi."""
-        pass
+        raise NotImplementedError("The reset pin of the 3pi is not accesible.")
 
     def left_motor(self, speed):
         """
@@ -44,7 +45,7 @@ class M3pi:
         :param speed: A normalised number -1.0 - 1.0 represents the full range.
         :type speed: float.
         """
-        pass
+        self._set_motor_speed(LEFT, speed)
 
     def right_motor(self, speed):
         """
@@ -53,25 +54,16 @@ class M3pi:
         :param speed: A normalised number -1.0 - 1.0 represents the full range.
         :type speed: float.
         """
-        pass
+        self._set_motor_speed(RIGHT, speed)
 
-    def forward(self, speed):
+    def straight(self, speed):
         """
-        Drive both motors forward as the same speed
-
-        :param speed: A normalised number 0 - 1.0 represents the full range.
+        Sets both motors at the same speed.
+        :param speed: A normalised number -1.0 - 1.0 represents the full range.
         :type speed: float.
         """
-        pass
-
-    def backward(self, speed):
-        """
-        Drive both motors backward as the same speed
-
-        :param speed: A normalised number 0 - 1.0 represents the full range.
-        :type speed: float
-        """
-        pass
+        self._set_motor_speed(RIGHT, speed)
+        self._set_motor_speed(LEFT, speed)
 
     def left(self, speed):
         """
@@ -81,6 +73,8 @@ class M3pi:
         :param speed: A normalised number 0 - 1.0 represents the full range.
         :type speed: float
         """
+        self._set_motor_speed(RIGHT, speed)
+        self._set_motor_speed(LEFT, -speed)
 
     def right(self, speed):
         """
@@ -90,11 +84,13 @@ class M3pi:
         :param speed: A normalised number 0 - 1.0 represents the full range.
         :type speed: float
         """
-        pass
+        self._set_motor_speed(RIGHT, -speed)
+        self._set_motor_speed(LEFT, speed)
 
     def stop(self):
         """ Stop both motors. """
-        pass
+        self._set_motor_speed(RIGHT, 0)
+        self._set_motor_speed(LEFT, 0)
 
     def pot_voltage(self):
         """
@@ -137,28 +133,19 @@ class M3pi:
         """
         Set calibration manually to the current settings.
         """
-        pass
+        self.transport.write([CMDS['PI_CALIBRATE']])
 
     def reset_calibration(self):
         """
         Clear the current calibration settings
         """
-        pass
+        self.transport.write([CMDS['LINE_SENSORS_RESET_CALIBRATION']])
 
     def PID_start(self, max_speed, a, b, c, d):
-        pass
+        self.transport.write([CMDS['SET_PID'], max_speed, a, b, c, d])
 
     def PID_stop(self):
-        pass
-
-    def leds(self, val):
-        """
-        Write to the 8 LEDs
-
-        :param leds: An 8 element list to set the LEDs
-        :type leds: list of bools
-        """
-        pass
+        self.transport.write([CMDS['STOP_PID']])
 
     def locate(self, x, y):
         """
@@ -169,13 +156,13 @@ class M3pi:
         :param y: The vertical position, from 0 to 1
         :type y: int
         """
-        pass
+        self.transport.write([CMDS['DO_LCD_GOTO_XY'], x, y])
 
-    def cls(void):
+    def cls(self):
         """
         Clear the LCD
         """
-        pass
+        self.transport.write([CMDS['DO_CLEAR']])
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ class Transports:
         :returns: the string representing the command.
         :rtype: string
         """
-        return reduce(lambda s, c: s + chr(c), cmd, "")
+        return reduce(lambda s, c: s + chr(int(c)), cmd, "")
 
     def _to_int_list(self, cmd_string):
         """
