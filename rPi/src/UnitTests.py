@@ -1,8 +1,8 @@
 import unittest
 import numpy
-from protocol import CMDS
-from test_transport import TestTransport
-from py3pi import Py3pi
+from py3pi.protocol import CMDS
+from py3pi.test_transport import TestTransport
+from py3pi.py3pi import Py3pi
 
 
 class TestTestTransport(unittest.TestCase):

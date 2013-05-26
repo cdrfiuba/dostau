@@ -1,0 +1,13 @@
+README
+======
+
+Before using the py3pi module you should install it.
+The code is packaged with dist-utils, but a Makefile is added for convince.
+
+To install the module only for the current user:
+
+$make install
+
+After installing you can test the installation:
+
+$make test
