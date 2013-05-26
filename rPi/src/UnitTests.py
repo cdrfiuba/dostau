@@ -1,8 +1,7 @@
 import unittest
-import math
 from protocol import CMDS
 from test_transport import TestTransport
-from m3pi import M3pi
+from m3pi import Py3pi
 
 
 class TestTestTransport(unittest.TestCase):
@@ -50,7 +49,7 @@ class Testm3pi(unittest.TestCase):
     def setUp(self):
         """ Excecuted before each test. """
         self.tr = TestTransport()
-        self.robot = M3pi(self.tr)
+        self.robot = Py3pi(self.tr)
 
     def tearDown(self):
         """ Excecuted after each test. """
@@ -81,10 +80,10 @@ class Testm3pi(unittest.TestCase):
 
         self.robot._set_motor_speed(2, 1)
         self._test_command((CMDS['M2_FORWARD'], 0x7f * abs(1)))
-        
+
         self.robot._set_motor_speed(2, -0.5)
         self._test_command((CMDS['M2_BACKWARD'], int(0x7f * abs(-0.5))))
-        
+
     def test_left_motor(self):
         """
         Tests if the correct motor index is used when calling the left motor
@@ -133,7 +132,7 @@ class Testm3pi(unittest.TestCase):
         self.assertEqual([CMDS['M1_FORWARD'], 0x7f], sent[0])
         self.assertEqual([CMDS['M2_FORWARD'], 0x7f], sent[1])
 
-    def test_straight_forward(self):
+    def test_straight_backward(self):
         """
         The straight method should set both motors at the same speed. Going
         backwards in this test.
@@ -176,21 +175,20 @@ class Testm3pi(unittest.TestCase):
 
     def test_calibrate(self):
         self.robot.calibrate()
-        sent = self.tr._wrote()
         self.assertEqual(self.tr._wrote()[0], [CMDS['PI_CALIBRATE']])
 
     def test_reset_calibration(self):
         """ Resets te IR sensor calibration values. """
         self.robot.reset_calibration()
-        sent = self.tr._wrote()
-        self.assertEqual(self.tr._wrote()[0], [CMDS['LINE_SENSORS_RESET_CALIBRATION']])
+        sent = self.tr._wrote()[0]
+        self.assertEqual(sent, [CMDS['LINE_SENSORS_RESET_CALIBRATION']])
 
     def test_locate(self):
         """ Moves the LCD cursor to a given prosition. """
         self.robot.locate(1, 1)
         sent = self.tr._wrote()
         self.assertEqual(sent[0], [CMDS['DO_LCD_GOTO_XY'], 1, 1])
-        
+
     def test_clear(self):
         """ Clears the LCD screen. """
         self.robot.cls()

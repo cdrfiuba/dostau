@@ -1,7 +1,7 @@
 from protocol import CMDS, LEFT, RIGHT
 
 
-class M3pi:
+class Py3pi:
     """
     This class implements the low lever communication protocol between the
     high level controller and the 3pi robot.
@@ -166,4 +166,4 @@ class M3pi:
 
 
 if __name__ == "__main__":
-    car = m3pi()
+    car = Py3pi()
