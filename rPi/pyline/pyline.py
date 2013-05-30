@@ -15,7 +15,7 @@ class Line:
         text_line = text_line.strip()
         self.x1, self.y1, self.x2, self.y2, self.width, self.p, self.NFA = \
             [float(n) for n in text_line.split(" ")]
-        if self.y1 > self.y2:
+        if self.y1 < self.y2:
             temp = self.y1
             self.y1 = self.y2
             self.y2 = temp
@@ -39,10 +39,18 @@ class Line:
         
         
 if __name__ == "__main__":
-    entrada = open("pista2.txt", "r")
-    
+    entrada = open("pista1.txt", "r")
     lines = [Line(s) for s in entrada.readlines()]
-    
     angles = [l.angle() for l in lines]
-    print numpy.median(angles)
-    print numpy.mean(angles)
+    print "Pista 1:"
+    print "Median = ", numpy.median(angles)
+    print "Mean = ", numpy.mean(angles)
+
+    print
+
+    entrada = open("pista2.txt", "r")
+    lines = [Line(s) for s in entrada.readlines()]
+    angles = [l.angle() for l in lines]
+    print "Pista 2:"
+    print "Median = ", numpy.median(angles)
+    print "Mean = ", numpy.mean(angles)
