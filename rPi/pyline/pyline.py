@@ -15,6 +15,13 @@ class Line:
         text_line = text_line.strip()
         self.x1, self.y1, self.x2, self.y2, self.width, self.p, self.NFA = \
             [float(n) for n in text_line.split(" ")]
+        if self.y1 > self.y2:
+            temp = self.y1
+            self.y1 = self.y2
+            self.y2 = temp
+            temp = self.x1
+            self.x1 = self.x2
+            self.x2 = temp
             
     def norm(self):
         """
@@ -38,3 +45,4 @@ if __name__ == "__main__":
     
     angles = [l.angle() for l in lines]
     print numpy.median(angles)
+    print numpy.mean(angles)
