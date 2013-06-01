@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date vie 17 may 2013 21:18:23 ART
+EESchema Schematic File Version 2  date vie 31 may 2013 21:32:53 ART
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -32,13 +32,14 @@ LIBS:valves
 LIBS:Conn-raspberry
 LIBS:txb0108
 LIBS:ptn78020
+LIBS:placa-expansion-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Expansión para el 3pi - Raspberry Pi"
-Date "17 may 2013"
+Date "1 jun 2013"
 Rev "0.8"
 Comp "Club de Robótica FIUBA"
 Comment1 "Lucas Chiesa, Gabriel Gavinowich"
@@ -224,12 +225,12 @@ $EndComp
 $Comp
 L +BATT #PWR010
 U 1 1 517B1D19
-P 4850 2300
-F 0 "#PWR010" H 4850 2250 20  0001 C CNN
-F 1 "+BATT" H 4850 2400 30  0000 C CNN
-F 2 "" H 4850 2300 60  0000 C CNN
-F 3 "" H 4850 2300 60  0000 C CNN
-	1    4850 2300
+P 4850 2250
+F 0 "#PWR010" H 4850 2200 20  0001 C CNN
+F 1 "+BATT" H 4850 2350 30  0000 C CNN
+F 2 "" H 4850 2250 60  0000 C CNN
+F 3 "" H 4850 2250 60  0000 C CNN
+	1    4850 2250
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -435,9 +436,9 @@ Text Label 8650 4100 2    60   ~ 0
 AD7
 Text Label 8650 4200 2    60   ~ 0
 PC5
-Text Label 8650 4300 2    60   ~ 0
-PC6
 Text Label 8650 4400 2    60   ~ 0
+PC6
+Text Label 8650 4300 2    60   ~ 0
 PB3
 $Comp
 L GND #PWR017
@@ -519,7 +520,6 @@ Text Label 8550 1850 2    60   ~ 0
 AD6_rPi
 NoConn ~ 8550 1450
 NoConn ~ 8550 1550
-NoConn ~ 8550 1650
 NoConn ~ 9850 2550
 NoConn ~ 9850 2450
 NoConn ~ 9850 2350
@@ -754,4 +754,6 @@ Wire Wire Line
 	8350 4100 8650 4100
 Wire Wire Line
 	8350 4000 8650 4000
+Text Label 8550 1650 2    60   ~ 0
+TX_rPi
 $EndSCHEMATC
