@@ -1,6 +1,6 @@
 import numpy.linalg
-
 import numpy
+import pygame
 
 
 class Line:
@@ -37,8 +37,7 @@ class Line:
         return numpy.angle(numpy.complex(self.x2 - self.x1, self.y2 - self.y1),
             deg=True)
         
-        
-if __name__ == "__main__":
+def testAngles():
     entrada = open("pista1.txt", "r")
     lines = [Line(s) for s in entrada.readlines()]
     angles = [l.angle() for l in lines]
@@ -54,3 +53,28 @@ if __name__ == "__main__":
     print "Pista 2:"
     print "Median = ", numpy.median(angles)
     print "Mean = ", numpy.mean(angles)
+    
+def testVideo():
+    pygame.init()
+    video = pygame.movie.Movie("/home/ernesto/Videos/Webcam/pista.mpg")
+    
+    s = video.get_size()
+    screen = pygame.display.set_mode(s)
+    
+    video.set_display(screen)
+    #video.play()
+    
+    f = 0
+    playing = True
+    while playing:
+        rf = video.render_frame(f)
+        if rf != f:
+            playing = False
+        else:
+            f += 1
+    
+
+if __name__ == "__main__":
+    #testAngles()
+    testVideo()
+    
