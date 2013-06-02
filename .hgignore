@@ -2,4 +2,8 @@ syntax:glob
 
 *.pyc
 */build/lib*
+*/build/temp*
 .coverage
+*-cache.lib
+*.bak
+*raspi_groovy*
