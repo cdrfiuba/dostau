@@ -67,7 +67,7 @@ def testVideo():
     video.set_display(videosurf)
     #video.play()
     
-    f = 1
+    f = 2
     playing = True
     while playing:
         rf = video.render_frame(f)
@@ -77,11 +77,11 @@ def testVideo():
         if rf != f or pygame.key.get_pressed()[pygame.K_ESCAPE]:
             playing = False
         else:
-            if (f%5) == 0:
-                pygame.image.save(videosurf, "frame.tga")
-                os.system("convert frame.tga frame.pgm")
-                os.system("./lsd frame.pgm frame.txt")
-                entrada = open("frame.txt", "r")
+            if True:
+                pygame.image.save(videosurf, "extract.tga")
+                os.system("convert extract.tga extract.pgm")
+                os.system("./lsd extract.pgm extract.txt")
+                entrada = open("extract.txt", "r")
                 lines = [Line(s) for s in entrada.readlines()]
                 angles = [l.angle() for l in lines]
                 alfa = numpy.median(angles)
@@ -90,11 +90,17 @@ def testVideo():
                 x1 = x0 + math.cos(alfa)*200
                 y1 = y0 + math.sin(alfa)*200
                 pygame.draw.line(videosurf, (255, 0, 0), (x0, y0), (x1, y1), 5)
+                pygame.image.save(videosurf, "frame%04u.tga"%f)
                 screen.blit(videosurf, (0, 0))
                 pygame.display.flip()
             f += 1
     
-    os.system("rm frame.tga frame.pgm frame.txt")
+    os.system("rm extract.tga extract.pgm extract.txt")
+    # generate movie
+    os.system("""mencoder "mf://frame*.tga" -mf fps=25 -ovc lavc -lavcopts vhq:vbitrate=600 -o movie.avi""")
+    # delete the frames
+    os.system("rm frame*.tga")
+    
 
 
 if __name__ == "__main__":
