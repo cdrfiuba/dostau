@@ -3,22 +3,23 @@
 #include "lsd.h"
 #include <math.h>
 
-double **ptrvector(long n);
 static PyObject *line_segment_detection(PyObject *self, PyObject *args);
 double *pyvector_to_Carrayptrs(PyArrayObject *arrayin);
 
 /* Method docstrings */
-char pylsd_docs[] =
+char _pylsd_docs[] =
 "This module wraps the LSD line segment detection library.\n \
  More information on http://www.ipol.im/pub/art/2012/gjmr-lsd/";
 
 char line_segment_detection_docs[] =
-"line_segment_detection(img, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins)\n \
+"line_segment_detection(img, X, Y, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins)\n \
  Looks for all the line segments in the image.\n \
  \n \
  :param img: Pointer to input image data. It must be an array of\n \
    doubles of size X x Y, and the pixel at coordinates\n \
    (x,y) is obtained by img[x+y*X].\n \
+ :param X: The size of the image in pixels, in the X axis.\n \
+ :param Y: The size of the image in pixels, in the Y axis.\n \
  :param scale: When different from 1.0, LSD will scale the input image\n \
    by 'scale' factor by Gaussian filtering, before detecting\n \
    line segments.\n \
@@ -78,14 +79,12 @@ static PyMethodDef _pylsdMethods[] = {
 
 // Module initialization function.
 PyMODINIT_FUNC init_pylsd(void) {
-  (void) Py_InitModule3("_pylsd", _pylsdMethods, pylsd_docs);
+  (void) Py_InitModule3("_pylsd", _pylsdMethods, _pylsd_docs);
   // Must be present for NumPy.  Called first after above line.
   import_array();
 }
 
 
-// Calculate the Gamma function.
-// Parameters:
 static PyObject* line_segment_detection(PyObject* self, PyObject* args)
 {
   // Python Object pointers
@@ -101,12 +100,8 @@ static PyObject* line_segment_detection(PyObject* self, PyObject* args)
   int n, i, len;
 
   // parse python arguments into C vars.
-  if (!PyArg_ParseTuple(args, "O!ddddddi", &PyArray_Type, &pyImage, &scale,
+  if (!PyArg_ParseTuple(args, "O!iiddddddi", &PyArray_Type, &pyImage, &X, &Y, &scale,
         &sigma_coef, &quant, &ang_th, &log_eps, &density_th, &n_bins)) return NULL;
-
-  // Get the dimensions of the input image
-  X = pyImage->dimensions[0];
-  Y = pyImage->dimensions[1];
 
   cImage = pyvector_to_Carrayptrs(pyImage);
 
@@ -116,40 +111,14 @@ static PyObject* line_segment_detection(PyObject* self, PyObject* args)
 
   len = n * 7; // n segments 7 values each.
   py_return_value = PyTuple_New(len);
-  for(i=0; i < len; i++)
+  for(i=0; i < len; i++) {
     PyTuple_SET_ITEM(py_return_value, i, PyFloat_FromDouble(segs[i]));
-
+  }
   return py_return_value;
-}
-
-/* Create Carray from PyArray Assumes PyArray is contiguous in memory. Memory
- * is allocated! */
-double **pymatrix_to_Carrayptrs(PyArrayObject *arrayin)  {
-  double **c, *a;
-  int i,n,m;
-
-  n=arrayin->dimensions[0];
-  m=arrayin->dimensions[1];
-  c=ptrvector(n);
-  a=(double *) arrayin->data;  /* pointer to arrayin data as double */
-  for ( i=0; i<n; i++)  {
-    c[i]=a+i*m;  }
-  return c;
 }
 
 /* Create 1D Carray from PyArray Assumes PyArray is contiguous in memory. */
 double *pyvector_to_Carrayptrs(PyArrayObject *arrayin)  {
   /* pointer to arrayin data as double */
   return (double *) arrayin->data;
-}
-
-/* Allocate a double *vector (vec of pointers) Memory is Allocated!
- * See void free_Carray(double ** ) */
-double **ptrvector(long n)  {
-  double **v;
-  v=(double **)malloc((size_t) (n*sizeof(double)));
-  if (!v)   {
-    printf("In **ptrvector. Allocation of memory for double array failed.");
-    exit(0);  }
-  return v;
 }

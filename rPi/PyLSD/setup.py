@@ -1,12 +1,12 @@
 from distutils.core import setup, Extension
 
-pylsd= Extension('_pylsd', sources=['_pylsd_c/pylsd.c', '_pylsd_c/lsd.c'], 
-                             extra_compile_args=['-O3'])
+_pylsd_c = Extension('_pylsd', sources=['_pylsd_c/pylsd.c', '_pylsd_c/lsd.c'],
+                     extra_compile_args=['-O3'])
 
 
 setup(name='pylsd',
       version='1.0',
-      ext_modules=[pylsd],
+      ext_modules=[_pylsd_c],
       packages=['pylsd'],
 
       # metadata for upload to PyPI
