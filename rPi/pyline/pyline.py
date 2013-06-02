@@ -4,10 +4,13 @@ import pygame
 import math
 import os
 
+# LSD wrapper
+import pylsd.Pylsd
+
 
 class Line:
     """ This class represents a line segment built upon an LSD description. """
-    
+
     def __init__(self, text_line):
         """
         :param text_line: String containing a list of numbers separated by
@@ -24,21 +27,20 @@ class Line:
             temp = self.x1
             self.x1 = self.x2
             self.x2 = temp
-            
+
     def norm(self):
         """
         Returns the norm (length) of the line segment.
         """
         return numpy.linalg.norm([self.x2 - self.x1, self.y2 - self.y1])
-        
+
     def angle(self):
         """
         Returns the angle of the line segment in radians.
         """
-        
         return numpy.angle(numpy.complex(self.x2 - self.x1, self.y2 - self.y1),
             deg=False)
-        
+
 def testAngles():
     entrada = open("pista1.txt", "r")
     lines = [Line(s) for s in entrada.readlines()]
@@ -55,32 +57,36 @@ def testAngles():
     print "Pista 2:"
     print "Median = ", numpy.median(angles)
     print "Mean = ", numpy.mean(angles)
-    
+
 def testVideo():
+    lsd = pylsd.Pylsd.PyLSD()
     pygame.init()
-    video = pygame.movie.Movie("/home/ernesto/Videos/Webcam/pista.mpg")
-    
+    video = pygame.movie.Movie("./pista.mpg")
+
     s = video.get_size()
     screen = pygame.display.set_mode(s)
     videosurf = pygame.Surface(s)
-    
+
     video.set_display(videosurf)
     #video.play()
-    
+
     f = 1
     playing = True
     while playing:
         rf = video.render_frame(f)
-        
         pygame.event.pump()
-        
+
         if rf != f or pygame.key.get_pressed()[pygame.K_ESCAPE]:
             playing = False
         else:
             if (f%5) == 0:
-                pygame.image.save(videosurf, "frame.tga")
-                os.system("convert frame.tga frame.pgm")
-                os.system("./lsd frame.pgm frame.txt")
+                pxarray = pygame.PixelArray(videosurf)
+                X, Y = pxarray.shape
+                segs = lsd.from_pixels(pxarray, X, Y)
+                lsd.write_seg_file('frame.txt', segs)
+                #pygame.image.save(videosurf, "frame.tga")
+                #os.system("convert frame.tga frame.pgm")
+                #os.system("./lsd frame.pgm frame.txt")
                 entrada = open("frame.txt", "r")
                 lines = [Line(s) for s in entrada.readlines()]
                 angles = [l.angle() for l in lines]
@@ -93,11 +99,10 @@ def testVideo():
                 screen.blit(videosurf, (0, 0))
                 pygame.display.flip()
             f += 1
-    
-    os.system("rm frame.tga frame.pgm frame.txt")
+
+    os.system("rm frame.txt")
 
 
 if __name__ == "__main__":
     #testAngles()
     testVideo()
-    
