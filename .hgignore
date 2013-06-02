@@ -7,3 +7,6 @@ syntax:glob
 *-cache.lib
 *.bak
 *raspi_groovy*
+*.mpg
+*.avi
+
