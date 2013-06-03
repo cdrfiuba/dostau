@@ -17,7 +17,7 @@ class PyLSD:
         :returns: A matrix of N segments by 7.
         """
 
-        image = numpy.array(im.getdata(), dtype=numpy.float64)
+        image = numpy.array(im, dtype=numpy.float64)
         # Calls the C method with all the suggested parameter values.
         s = _pylsd.line_segment_detection(image, X, Y, 0.8, 0.6, 2.0, 22.5, 0.0, 0.7, 1024)
         ans = numpy.array(s)
@@ -47,7 +47,7 @@ class PyLSD:
         """
         im = Image.open(image_file)
         X, Y = im.size
-        return self._lsd_defaults(im, X, Y)
+        return self._lsd_defaults(im.getdata(), X, Y)
 
     def from_pixels(self, pixels, X, Y):
         """
