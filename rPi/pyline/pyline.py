@@ -12,7 +12,7 @@ class Line:
     """ This class represents a line segment built upon an LSD description. """
 
     @staticmethod
-    def from_string(self, text_line):
+    def from_string(text_line):
         """
         Creates a Line object from a segment parameter string.
 
@@ -76,7 +76,7 @@ def getArray(surf):
 
 def testAngles():
     entrada = open("pista1.txt", "r")
-    lines = [Line(s) for s in entrada.readlines()]
+    lines = [Line.from_string(s) for s in entrada.readlines()]
     angles = [l.angle() for l in lines]
     print "Pista 1:"
     print "Median = ", numpy.median(angles)
@@ -85,7 +85,7 @@ def testAngles():
     print
 
     entrada = open("pista2.txt", "r")
-    lines = [Line(s) for s in entrada.readlines()]
+    lines = [Line.from_string(s) for s in entrada.readlines()]
     angles = [l.angle() for l in lines]
     print "Pista 2:"
     print "Median = ", numpy.median(angles)
