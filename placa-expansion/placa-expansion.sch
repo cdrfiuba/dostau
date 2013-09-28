@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date vie 31 may 2013 21:32:53 ART
+EESchema Schematic File Version 2  date vie 27 sep 2013 20:42:12 ART
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -32,14 +32,13 @@ LIBS:valves
 LIBS:Conn-raspberry
 LIBS:txb0108
 LIBS:ptn78020
-LIBS:placa-expansion-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Expansión para el 3pi - Raspberry Pi"
-Date "1 jun 2013"
+Date "27 sep 2013"
 Rev "0.8"
 Comp "Club de Robótica FIUBA"
 Comment1 "Lucas Chiesa, Gabriel Gavinowich"
@@ -386,7 +385,6 @@ F 3 "" H 4800 3050 60  0000 C CNN
 	1    4800 3050
 	1    0    0    -1  
 $EndComp
-NoConn ~ 9850 1350
 Text Label 3550 4900 0    60   ~ 0
 Vcc_3pi
 Text Label 3550 4800 0    60   ~ 0
@@ -403,17 +401,6 @@ Text Label 2750 5100 2    60   ~ 0
 PC5
 Text Label 8650 3800 2    60   ~ 0
 Vcc_3pi
-$Comp
-L PBD-26 J1
-U 1 1 5173EFB3
-P 9200 1950
-F 0 "J1" H 9200 2650 60  0000 C CNN
-F 1 "PBD-26" V 9200 1950 50  0000 C CNN
-F 2 "" H 9200 1950 60  0001 C CNN
-F 3 "" H 9200 1950 60  0001 C CNN
-	1    9200 1950
-	1    0    0    -1  
-$EndComp
 Text Label 8550 1350 2    60   ~ 0
 3v3_rPi
 Text Label 9750 3800 0    60   ~ 0
@@ -756,4 +743,30 @@ Wire Wire Line
 	8350 4000 8650 4000
 Text Label 8550 1650 2    60   ~ 0
 TX_rPi
+$Comp
+L PBD-26 J1
+U 1 1 5173EFB3
+P 9200 1950
+F 0 "J1" H 9200 2650 60  0000 C CNN
+F 1 "PBD-26" V 9200 1950 50  0000 C CNN
+F 2 "" H 9200 1950 60  0001 C CNN
+F 3 "" H 9200 1950 60  0001 C CNN
+	1    9200 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9850 1350 10300 1350
+$Comp
+L +5V #PWR028
+U 1 1 5246193B
+P 10300 1250
+F 0 "#PWR028" H 10300 1340 20  0001 C CNN
+F 1 "+5V" H 10300 1340 30  0000 C CNN
+F 2 "" H 10300 1250 60  0000 C CNN
+F 3 "" H 10300 1250 60  0000 C CNN
+	1    10300 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10300 1350 10300 1250
 $EndSCHEMATC
