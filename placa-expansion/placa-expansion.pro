@@ -1,6 +1,6 @@
-update=vie 17 may 2013 22:06:23 ART
+update=Sat 28 Sep 2013 08:42:05 PM ART
 version=1
-last_client=kicad
+last_client=pcbnew
 [eeschema]
 version=1
 LibDir=../placa-expansion
@@ -43,26 +43,34 @@ LibName30=valves
 LibName31=Conn-raspberry
 LibName32=txb0108
 LibName33=ptn78020
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
+[general]
+version=1
 [pcbnew]
 version=1
 LastNetListRead=placa-expansion.net
 UseCmpFile=1
-PadDrill="    1,270000"
-PadDrillOvalY="    1,270000"
-PadSizeH="    2,032000"
-PadSizeV="    2,032000"
-PcbTextSizeV="    1,500000"
-PcbTextSizeH="    1,500000"
-PcbTextThickness="    0,300000"
-ModuleTextSizeV="    1,500000"
-ModuleTextSizeH="    1,500000"
-ModuleTextSizeThickness="    0,150000"
-SolderMaskClearance="    0,200000"
-SolderMaskMinWidth="    0,000000"
-DrawSegmentWidth="    0,200000"
-BoardOutlineThickness="    0,150000"
-ModuleOutlineThickness="    0,304800"
+PadDrill="    3.000000"
+PadDrillOvalY="    3.000000"
+PadSizeH="    3.000000"
+PadSizeV="    3.000000"
+PcbTextSizeV="    1.500000"
+PcbTextSizeH="    1.500000"
+PcbTextThickness="    0.300000"
+ModuleTextSizeV="    1.500000"
+ModuleTextSizeH="    1.500000"
+ModuleTextSizeThickness="    0.150000"
+SolderMaskClearance="    0.200000"
+SolderMaskMinWidth="    0.000000"
+DrawSegmentWidth="    0.200000"
+BoardOutlineThickness="    0.200000"
+ModuleOutlineThickness="    0.304800"
 [pcbnew/libraries]
+LibDir=../placa-expansion
 LibName1=sockets
 LibName2=connect
 LibName3=discret
@@ -78,11 +86,4 @@ LibName12=molex_2_recto
 LibName13=TSSOP20
 LibName14=texasDCDC
 LibName15=pin7x2
-LibDir=../placa-expansion
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
-[general]
-version=1
+LibName16=LOGO
