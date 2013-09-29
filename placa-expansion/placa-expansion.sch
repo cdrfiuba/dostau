@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date vie 27 sep 2013 20:42:12 ART
+EESchema Schematic File Version 2
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -32,7 +32,7 @@ LIBS:valves
 LIBS:Conn-raspberry
 LIBS:txb0108
 LIBS:ptn78020
-EELAYER 27 0
+EELAYER 24 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -741,8 +741,6 @@ Wire Wire Line
 	8350 4100 8650 4100
 Wire Wire Line
 	8350 4000 8650 4000
-Text Label 8550 1650 2    60   ~ 0
-TX_rPi
 $Comp
 L PBD-26 J1
 U 1 1 5173EFB3
