@@ -1,4 +1,4 @@
-update=Sat 28 Sep 2013 08:42:05 PM ART
+update=Sun 29 Sep 2013 06:26:03 PM ART
 version=1
 last_client=pcbnew
 [eeschema]
@@ -53,7 +53,7 @@ version=1
 [pcbnew]
 version=1
 LastNetListRead=placa-expansion.net
-UseCmpFile=1
+UseCmpFile=0
 PadDrill="    3.000000"
 PadDrillOvalY="    3.000000"
 PadSizeH="    3.000000"
